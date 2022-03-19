@@ -22,15 +22,36 @@ public class ContatoService {
 		Page<ContatoDTO> contatoDto = contact.map(x -> new ContatoDTO(x));
 		return contatoDto;
 	}
+	@Transactional(readOnly = true)
+	public ContatoDTO finContact(Long id) {
+		Contato contact = contato.findById(id).get();
+		ContatoDTO contactDTO = new ContatoDTO(contact);
+		return contactDTO;
+	}
 	
 	@Transactional
 	public String saveContato(ContatoDTO con) {
 		Contato contact = new Contato();
 		contact.setNome(con.getNome());
-		contact.setNome(con.getEmail());
-		contact.setNome(con.getMensagem());
-		
-		contato.save(contact);
+		contact.setEmail(con.getEmail());
+		contact.setMensagem(con.getMensagem());
+		contato.saveAndFlush(contact);
 		return "{Mensagem: 'Enviado com sucesso'}";
+	}
+	
+	@Transactional
+	public ContatoDTO UpdateContato(ContatoDTO contact){
+		Contato con = contato.findById(contact.getId()).get();
+		con.setId(contact.getId());
+		con.setNome(contact.getNome());
+		con.setEmail(contact.getEmail());
+		con.setMensagem(contact.getMensagem());
+		contato.saveAndFlush(con);
+		return contact;
+	}
+	@Transactional 
+	public String DeleteContato(Long id){
+		contato.deleteById(id);
+		return "ok";
 	}
 }

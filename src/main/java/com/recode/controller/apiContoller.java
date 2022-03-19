@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class apiContoller {
 	public DestinoDTO getDestino(@PathVariable Long id) {
 		return sevice.findById(id);
 	}
-	@PutMapping("/")
+	@PutMapping("/edit")
 	public Destino updateDest(@RequestBody DestinoDTO dest){
 		return sevice.updateDest(dest);
 
@@ -42,5 +43,9 @@ public class apiContoller {
 	public String InsertDest(@RequestBody DestinoDTO dest){
 		return sevice.InsertDest(dest);
 
+	}
+	@DeleteMapping("/{id}")
+	public String DeleteDestino(@PathVariable Long id ){
+		return sevice.DeleteDest(id);
 	}
 }

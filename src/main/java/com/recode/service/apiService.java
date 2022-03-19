@@ -3,7 +3,6 @@ package com.recode.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -59,6 +58,13 @@ public class apiService {
 		destin.setDestinoRetornoData(dest.getDestinoRetornoData());
 		repository.saveAndFlush(destin);
 		return "Sucesso";
+	}
+
+	@Transactional
+	public String DeleteDest(Long id){
+		Destino destino = repository.findById(id).get();
+		repository.delete(destino);
+		return "Ok";
 	}
 	/*
 
